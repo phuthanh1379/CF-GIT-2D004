@@ -214,6 +214,27 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: projectile_1
+      rect:
+        serializedVersion: 2
+        x: 843
+        y: 120
+        width: 13
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0c95db5aafed66a4b901b7ff1ec6367c
+      internalID: -2088924364
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -227,6 +248,7 @@ TextureImporter:
     nameFileIdTable:
       npc_1: 1463751415
       projectile_0: 834615577
+      projectile_1: -2088924364
       sheet_0: -2024305827
       sheet_1: 1483733696
       sheet_2: 1347700434

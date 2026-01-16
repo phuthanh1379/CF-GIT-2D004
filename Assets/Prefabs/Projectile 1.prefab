@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 8335782607942159384}
   - component: {fileID: 7668710513564616429}
-  - component: {fileID: 4600998113647816650}
+  - component: {fileID: -5113247132511024157}
   m_Layer: 0
-  m_Name: Projectile
+  m_Name: Projectile 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 5469086972314226007}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -74,7 +74,7 @@ SpriteRenderer:
   m_SortingLayerID: 997041179
   m_SortingLayer: 2
   m_SortingOrder: -1
-  m_Sprite: {fileID: 834615577, guid: 51377a5a762923e469fdf1c7923f412c, type: 3}
+  m_Sprite: {fileID: -2088924364, guid: 51377a5a762923e469fdf1c7923f412c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -85,7 +85,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &4600998113647816650
+--- !u!114 &-5113247132511024157
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -94,9 +94,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 5469086972314226007}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e1b473a1728bb4d468b839cf7351714f, type: 3}
+  m_Script: {fileID: 11500000, guid: 0c4b7bc4c52435c4db53918517f95d2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   value:
-    speed: 10
-    timeToLive: 2
+    speed: 5
+    timeToLive: 5

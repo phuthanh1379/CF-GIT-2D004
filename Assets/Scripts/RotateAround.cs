@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class RotateAround : MonoBehaviour
 {
-    [SerializeField, Range(0.1f, 1.5f)] private float speed;
+    [SerializeField, Range(0.1f, 5f)] private float speed;
     [SerializeField, Tooltip("Point where object rotates around")] private Transform axisPoint;
 
     void Update()

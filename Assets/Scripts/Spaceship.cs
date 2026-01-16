@@ -4,17 +4,39 @@ using UnityEngine;
 
 public class Spaceship : MonoBehaviour
 {
-    [SerializeField] private SpriteRenderer spaceshipSpriteRenderer;
+    [Header("Moving")]
     [SerializeField] private float speed;
-    [SerializeField] private GameObject projectile;
+    [SerializeField] private Transform meteor;
 
-    [SerializeField] private List<Transform> gunTransformList = new();
+    [Header("Shooting")]
+    [SerializeField] private int bulletMax;
+    [SerializeField] private float reloadTime;
+    [SerializeField] private Projectile projectile;
+    [SerializeField] private List<Transform> gunTransformList = new List<Transform>();
+
+    [Header("Special Shooting")]
+    [SerializeField] private SpecialProjectile specialProjectile;
+    [SerializeField] private Transform target;
+    [SerializeField] private Transform specialGunTransform;
+
+    private bool _isReloading;
+    private int _bulletCount;
+
+    private void Awake()
+    {
+        _bulletCount = bulletMax;
+    }
 
     private void Update()
     {
         if (Input.GetMouseButtonDown(0))
         {
             Shoot();
+        }
+
+        if (Input.GetMouseButtonDown(1))
+        {
+            SpecialShoot();
         }
 
         float horizontal = Input.GetAxisRaw("Horizontal");
@@ -24,6 +46,12 @@ public class Spaceship : MonoBehaviour
         //transform.position += Time.deltaTime * speed * new Vector3(horizontal, vertical, 0f);
     }
 
+    private void SpecialShoot()
+    {
+        var clone = Instantiate(specialProjectile, specialGunTransform.position, specialGunTransform.rotation);
+        clone.Init(target);
+    }
+
     private void Shoot()
     {
         if (gunTransformList == null || gunTransformList.Count == 0)
@@ -31,16 +59,34 @@ public class Spaceship : MonoBehaviour
             return;
         }
 
+        if (_bulletCount <= 0)
+        {
+            if (_isReloading)
+            {
+                return;
+            }
+
+            StartCoroutine(Reload());
+            return;
+        }
+
+        _bulletCount--;
         foreach (Transform gun in gunTransformList)
         {
             Shoot(gun);
         }
     }
 
+    private IEnumerator Reload()
+    {
+        _isReloading = true;
+        yield return new WaitForSeconds(reloadTime);
+        _bulletCount = bulletMax;
+        _isReloading = false;
+    }
+
     private void Shoot(Transform gun)
     {
-        GameObject clone = Instantiate(projectile, Vector3.zero, gun.rotation);
-        clone.transform.SetParent(transform);
-        clone.transform.localPosition = gun.localPosition;
+        var clone = Instantiate(projectile, gun.position, gun.rotation);
     }
 }
