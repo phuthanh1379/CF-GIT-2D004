@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class Spaceship : MonoBehaviour
 {
+    [SerializeField] private SpriteRenderer spriteRenderer;
+    [SerializeField] private Color hitColor;
+    [SerializeField] private int maxHealth;
+
     [Header("Moving")]
     [SerializeField] private float speed;
     [SerializeField] private Transform meteor;
@@ -21,10 +25,14 @@ public class Spaceship : MonoBehaviour
 
     private bool _isReloading;
     private int _bulletCount;
+    private int _currentHealth;
+    private Color _baseColor;
 
     private void Awake()
     {
         _bulletCount = bulletMax;
+        _baseColor = spriteRenderer.color;
+        _currentHealth = maxHealth;
     }
 
     private void Update()
@@ -44,6 +52,31 @@ public class Spaceship : MonoBehaviour
 
         transform.Translate(Time.deltaTime * speed * new Vector3(horizontal, vertical, 0f));
         //transform.position += Time.deltaTime * speed * new Vector3(horizontal, vertical, 0f);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        //Destroy(this.gameObject);
+        StartCoroutine(OnHit());
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        UnityEngine.Debug.LogError($"Trigger! {collision.gameObject.name}");
+        StartCoroutine(OnHit());
+    }
+
+    private IEnumerator OnHit()
+    {
+        _currentHealth--;
+        spriteRenderer.color = hitColor;
+        yield return new WaitForSeconds(0.1f);
+        spriteRenderer.color = _baseColor;
+
+        if (_currentHealth <= 0)
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void SpecialShoot()

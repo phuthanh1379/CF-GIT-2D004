@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SpecialProjectile : MonoBehaviour
 {
-    [SerializeField] private ProjectileValue value;
+    [SerializeField] private ProjectileData data;
 
     private Transform _target;
 
@@ -15,18 +15,26 @@ public class SpecialProjectile : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(SelfDestroy(value.TimeToLive));
+        StartCoroutine(SelfDestroy(data.TimeToLive));
     }
 
     private void Update()
     {
-        transform.position = Vector3.MoveTowards(transform.position, _target.position, 
-            value.Speed * Time.deltaTime);
+        if (_target != null)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, _target.position,
+            data.Speed * Time.deltaTime);
+        }
     }
 
     private IEnumerator SelfDestroy(float delay)
     {
         yield return new WaitForSeconds(delay);
         Destroy(this.gameObject);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        Destroy(gameObject);
     }
 }
