@@ -7,6 +7,7 @@ public class Spaceship : MonoBehaviour
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private Color hitColor;
     [SerializeField] private int maxHealth;
+    [SerializeField] private Animator animator;
 
     [Header("Moving")]
     [SerializeField] private float speed;
@@ -49,6 +50,9 @@ public class Spaceship : MonoBehaviour
 
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
+        animator.SetInteger("X", (int)horizontal);
+        animator.SetFloat("Horizontal", horizontal);
+        animator.SetInteger("Y", (int)vertical);
 
         transform.Translate(Time.deltaTime * speed * new Vector3(horizontal, vertical, 0f));
         //transform.position += Time.deltaTime * speed * new Vector3(horizontal, vertical, 0f);
