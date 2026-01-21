@@ -5,6 +5,7 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
     [SerializeField] private ProjectileData data;
+    [SerializeField] private GameObject explosionFx;
 
     private void Start()
     {
@@ -30,6 +31,7 @@ public class Projectile : MonoBehaviour
         //    Destroy(collision.gameObject);
         //}
 
+        Instantiate(explosionFx, transform.position, Quaternion.identity);
         Destroy(gameObject);
     }
 }

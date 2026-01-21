@@ -102,6 +102,7 @@ MonoBehaviour:
   data:
     speed: 10
     timeToLive: 2
+  explosionFx: {fileID: 8176584662008495994, guid: 2d642762dde1602439f994a32928f6ce, type: 3}
 --- !u!70 &8873568066463532685
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
