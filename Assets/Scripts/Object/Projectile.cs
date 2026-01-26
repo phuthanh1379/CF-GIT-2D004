@@ -26,11 +26,6 @@ public class Projectile : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         UnityEngine.Debug.Log($"OnCollide with: {collision.gameObject.name}");
-        //if (collision != null && collision.gameObject.CompareTag("Obstacle"))
-        //{
-        //    Destroy(collision.gameObject);
-        //}
-
         Instantiate(explosionFx, transform.position, Quaternion.identity);
         Destroy(gameObject);
     }

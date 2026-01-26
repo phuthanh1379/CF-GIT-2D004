@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Spaceship : MonoBehaviour
 {
@@ -8,6 +9,9 @@ public class Spaceship : MonoBehaviour
     [SerializeField] private Color hitColor;
     [SerializeField] private int maxHealth;
     [SerializeField] private Animator animator;
+    [SerializeField] private Image healthBarImage;
+    [SerializeField] public AudioSource audioSource;
+    [SerializeField] private List<AudioClip> shootSFXList = new List<AudioClip>();
 
     [Header("Moving")]
     [SerializeField] private float speed;
@@ -25,15 +29,18 @@ public class Spaceship : MonoBehaviour
     [SerializeField] private Transform specialGunTransform;
 
     private bool _isReloading;
-    private int _bulletCount;
-    private int _currentHealth;
     private Color _baseColor;
+
+    public int CurrentHealth { get; private set; }
+    public int BulletCount { get; private set; }
+    public int BulletMax => bulletMax;
+    public int HealthMax => maxHealth;
 
     private void Awake()
     {
-        _bulletCount = bulletMax;
+        BulletCount = bulletMax;
         _baseColor = spriteRenderer.color;
-        _currentHealth = maxHealth;
+        CurrentHealth = maxHealth;
     }
 
     private void Update()
@@ -56,6 +63,7 @@ public class Spaceship : MonoBehaviour
 
         transform.Translate(Time.deltaTime * speed * new Vector3(horizontal, vertical, 0f));
         //transform.position += Time.deltaTime * speed * new Vector3(horizontal, vertical, 0f);
+        healthBarImage.fillAmount = (float)CurrentHealth / HealthMax;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -72,12 +80,12 @@ public class Spaceship : MonoBehaviour
 
     private IEnumerator OnHit()
     {
-        _currentHealth--;
+        CurrentHealth--;
         spriteRenderer.color = hitColor;
         yield return new WaitForSeconds(0.1f);
         spriteRenderer.color = _baseColor;
 
-        if (_currentHealth <= 0)
+        if (CurrentHealth <= 0)
         {
             Destroy(gameObject);
         }
@@ -96,7 +104,7 @@ public class Spaceship : MonoBehaviour
             return;
         }
 
-        if (_bulletCount <= 0)
+        if (BulletCount <= 0)
         {
             if (_isReloading)
             {
@@ -107,7 +115,8 @@ public class Spaceship : MonoBehaviour
             return;
         }
 
-        _bulletCount--;
+        BulletCount--;
+        PlayShootSFX();
         foreach (Transform gun in gunTransformList)
         {
             Shoot(gun);
@@ -118,12 +127,26 @@ public class Spaceship : MonoBehaviour
     {
         _isReloading = true;
         yield return new WaitForSeconds(reloadTime);
-        _bulletCount = bulletMax;
+        BulletCount = bulletMax;
         _isReloading = false;
     }
 
     private void Shoot(Transform gun)
     {
         var clone = Instantiate(projectile, gun.position, gun.rotation);
+    }
+
+    private void PlayShootSFX()
+    {
+        if (audioSource == null || shootSFXList == null || shootSFXList.Count <= 0)
+        {
+            return;
+        }
+
+        var rnd = new System.Random();
+        var randomIndex = rnd.Next(0, shootSFXList.Count);
+        var clip = shootSFXList[randomIndex];
+
+        audioSource.PlayOneShot(clip);
     }
 }
