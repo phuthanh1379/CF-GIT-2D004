@@ -7,8 +7,6 @@ public class Projectile : MonoBehaviour
     [SerializeField] private ProjectileData data;
     [SerializeField] private GameObject explosionFx;
 
-    private MenuController menuController;
-
     private void Start()
     {
         StartCoroutine(SelfDestroy(data.TimeToLive));
@@ -29,6 +27,7 @@ public class Projectile : MonoBehaviour
     {
         UnityEngine.Debug.Log($"OnCollide with: {collision.gameObject.name}");
         Instantiate(explosionFx, transform.position, Quaternion.identity);
+        AudioController.Instance.PlayExplosionSFX();
         Destroy(gameObject);
     }
 }

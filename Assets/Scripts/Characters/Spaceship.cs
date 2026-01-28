@@ -11,6 +11,7 @@ public class Spaceship : MonoBehaviour
     [SerializeField] private int maxHealth;
     [SerializeField] private Animator animator;
     [SerializeField] private Image healthBarImage;
+    [SerializeField] private GameObject explosionFx;
 
     [Header("Moving")]
     [SerializeField] private float speed;
@@ -88,9 +89,16 @@ public class Spaceship : MonoBehaviour
 
         if (CurrentHealth <= 0)
         {
-            PlayerDead?.Invoke();
-            Destroy(gameObject);
+            OnDead();
         }
+    }
+
+    private void OnDead()
+    {
+        Instantiate(explosionFx, transform.position, Quaternion.identity);
+        AudioController.Instance.PlayExplosionSFX();
+        PlayerDead?.Invoke();
+        Destroy(gameObject);
     }
 
     private void SpecialShoot()

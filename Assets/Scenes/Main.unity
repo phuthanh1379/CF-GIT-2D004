@@ -4057,15 +4057,7 @@ MonoBehaviour:
   maxHealth: 1
   animator: {fileID: 1992926973}
   healthBarImage: {fileID: 1784444886}
-  audioSource: {fileID: 0}
-  shootSFXList:
-  - {fileID: 8300000, guid: 3a25365df93305a4fa1a49419e220782, type: 3}
-  - {fileID: 8300000, guid: c8b4f9503993d394f89583b29cb6291b, type: 3}
-  - {fileID: 8300000, guid: ddf928a144dab9a4b9c8ac3a6239972e, type: 3}
-  - {fileID: 8300000, guid: b527c6b58d74d4140926c603f7a5385b, type: 3}
-  - {fileID: 8300000, guid: a6f8459cb2a861a4a8900a56a4742b5f, type: 3}
-  - {fileID: 8300000, guid: 86b273feaf060334aa0d43d180288c31, type: 3}
-  - {fileID: 8300000, guid: d17b59bb5c0bc18478a302279261b1c6, type: 3}
+  explosionFx: {fileID: 8176584662008495994, guid: 2d642762dde1602439f994a32928f6ce, type: 3}
   speed: 2.5
   meteor: {fileID: 2138897749548665346}
   bulletMax: 3
