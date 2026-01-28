@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
 
@@ -11,25 +8,20 @@ public class MenuController : MonoBehaviour
     [SerializeField] private AudioClip clip;
     [SerializeField] private TMP_InputField inputField;
 
-    public static MenuController Instance;
-
-    public string _inputFieldValue;
-
     private void Awake()
     {
-        if (Instance != null || Instance != this)
-        {
-            Destroy(Instance);
-        }
-
-        Instance = this;
-        DontDestroyOnLoad(gameObject);
+        inputField.onValueChanged.AddListener(OnInputFieldValueChanged);
     }
 
-    private void Update()
+    private void OnDestroy()
     {
-        _inputFieldValue = inputField.text;
-        UnityEngine.Debug.Log(_inputFieldValue);
+        inputField.onValueChanged.RemoveListener(OnInputFieldValueChanged);
+    }
+
+    private void OnInputFieldValueChanged(string value)
+    {
+        GameData.Instance.SetPlayerName(value);
+        UnityEngine.Debug.Log(value);
     }
 
     public void OnClickPlayButton()

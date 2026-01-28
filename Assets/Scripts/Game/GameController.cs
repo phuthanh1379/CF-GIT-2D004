@@ -14,10 +14,24 @@ public class GameController : MonoBehaviour
     [SerializeField] private Image healthBarImage;
     [SerializeField] private TMP_Text playerNameText;
 
+    [Header("Game Over UI")]
+    [SerializeField] private GameObject gameOverUI;
+
+    private void Awake()
+    {
+        player.PlayerDead += OnPlayerDead;
+    }
+
+    private void OnDestroy()
+    {
+        player.PlayerDead -= OnPlayerDead;
+    }
+
     private void Start()
     {
         pauseMenuGameObject.SetActive(false);
-        playerNameText.text = MenuController.Instance._inputFieldValue;
+        playerNameText.text = GameData.Instance.PlayerName;
+        gameOverUI.SetActive(false);
     }
 
     private void Update()
@@ -35,5 +49,10 @@ public class GameController : MonoBehaviour
     public void OnClickQuitButton()
     {
         SceneManager.LoadScene("Menu");
+    }
+
+    private void OnPlayerDead()
+    {
+        gameOverUI.SetActive(true);
     }
 }

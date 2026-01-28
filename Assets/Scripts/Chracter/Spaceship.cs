@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -30,6 +31,8 @@ public class Spaceship : MonoBehaviour
 
     private bool _isReloading;
     private Color _baseColor;
+
+    public event Action PlayerDead;
 
     public int CurrentHealth { get; private set; }
     public int BulletCount { get; private set; }
@@ -87,6 +90,7 @@ public class Spaceship : MonoBehaviour
 
         if (CurrentHealth <= 0)
         {
+            PlayerDead?.Invoke();
             Destroy(gameObject);
         }
     }
