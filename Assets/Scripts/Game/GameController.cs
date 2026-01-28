@@ -12,10 +12,12 @@ public class GameController : MonoBehaviour
     [SerializeField] private TMP_Text healthText;
     [SerializeField] private TMP_Text bulletCountText;
     [SerializeField] private Image healthBarImage;
+    [SerializeField] private TMP_Text playerNameText;
 
     private void Start()
     {
         pauseMenuGameObject.SetActive(false);
+        playerNameText.text = MenuController.Instance._inputFieldValue;
     }
 
     private void Update()

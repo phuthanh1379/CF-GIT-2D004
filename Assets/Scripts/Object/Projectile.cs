@@ -7,6 +7,8 @@ public class Projectile : MonoBehaviour
     [SerializeField] private ProjectileData data;
     [SerializeField] private GameObject explosionFx;
 
+    private MenuController menuController;
+
     private void Start()
     {
         StartCoroutine(SelfDestroy(data.TimeToLive));
