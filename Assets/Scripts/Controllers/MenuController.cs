@@ -4,8 +4,6 @@ using TMPro;
 
 public class MenuController : MonoBehaviour
 {
-    [SerializeField] private AudioSource audioSource;
-    [SerializeField] private AudioClip clip;
     [SerializeField] private TMP_InputField inputField;
 
     private void Awake()
@@ -43,6 +41,6 @@ public class MenuController : MonoBehaviour
 
     private void PlayOnClickButtonSound()
     {
-        audioSource.PlayOneShot(clip);
+        AudioController.Instance.PlayUISoundEffect();
     }
 }

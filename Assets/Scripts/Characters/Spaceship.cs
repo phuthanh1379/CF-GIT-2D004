@@ -11,8 +11,6 @@ public class Spaceship : MonoBehaviour
     [SerializeField] private int maxHealth;
     [SerializeField] private Animator animator;
     [SerializeField] private Image healthBarImage;
-    [SerializeField] public AudioSource audioSource;
-    [SerializeField] private List<AudioClip> shootSFXList = new List<AudioClip>();
 
     [Header("Moving")]
     [SerializeField] private float speed;
@@ -120,7 +118,7 @@ public class Spaceship : MonoBehaviour
         }
 
         BulletCount--;
-        PlayShootSFX();
+        AudioController.Instance.PlayShootSFX();
         foreach (Transform gun in gunTransformList)
         {
             Shoot(gun);
@@ -138,19 +136,5 @@ public class Spaceship : MonoBehaviour
     private void Shoot(Transform gun)
     {
         var clone = Instantiate(projectile, gun.position, gun.rotation);
-    }
-
-    private void PlayShootSFX()
-    {
-        if (audioSource == null || shootSFXList == null || shootSFXList.Count <= 0)
-        {
-            return;
-        }
-
-        var rnd = new System.Random();
-        var randomIndex = rnd.Next(0, shootSFXList.Count);
-        var clip = shootSFXList[randomIndex];
-
-        audioSource.PlayOneShot(clip);
     }
 }
