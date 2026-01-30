@@ -24,6 +24,8 @@ public class GameController : MonoBehaviour
     [Header("Game Over UI")]
     [SerializeField] private GameObject gameOverUI;
 
+    private bool _isPause = false;
+
     private void Awake()
     {
         player.PlayerDead += OnPlayerDead;
@@ -46,7 +48,7 @@ public class GameController : MonoBehaviour
 
     private void Start()
     {
-        pauseMenuGameObject.SetActive(false);
+        UnpauseGame();
         playerNameText.text = GameData.Instance.PlayerName;
         playerScoreText.text = $"{GameData.Instance.PlayerProfile.PlayerScore}";
         gameOverUI.SetActive(false);
@@ -56,12 +58,33 @@ public class GameController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            pauseMenuGameObject.SetActive(true);
+            if (_isPause)
+            {
+                UnpauseGame();
+            }
+            else
+            {
+                PauseGame();
+            }
         }
 
         healthText.text = $"Health: {player.CurrentHealth}";
         healthBarImage.fillAmount = (float)player.CurrentHealth / player.HealthMax;
         bulletCountText.text = $"Bullet: {player.BulletCount}/{player.BulletMax}";
+    }
+
+    private void PauseGame()
+    {
+        _isPause = true;
+        Time.timeScale = 0f;
+        pauseMenuGameObject.SetActive(true);
+    }
+
+    public void UnpauseGame()
+    {
+        _isPause = false;
+        Time.timeScale = 1f;
+        pauseMenuGameObject.SetActive(false);
     }
 
     public void OnClickQuitButton()
