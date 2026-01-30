@@ -4260,6 +4260,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameData
       objectReference: {fileID: 0}
+    - target: {fileID: 8874601253553963333, guid: 1600dd9a52a6d2f47a690d5b1422649b, type: 3}
+      propertyPath: playerProfile
+      value: 
+      objectReference: {fileID: 11400000, guid: 3f9244166fdfb4040861f51741c20eef, type: 2}
     - target: {fileID: 8940020940665734156, guid: 1600dd9a52a6d2f47a690d5b1422649b, type: 3}
       propertyPath: m_RootOrder
       value: 4
