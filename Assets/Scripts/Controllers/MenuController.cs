@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class MenuController : MonoBehaviour
 {
     [SerializeField] private TMP_InputField inputField;
+    [SerializeField] private TMP_Text welcomeText;
 
     [Header("SFX Volume")]
     [SerializeField] private Slider sfxVolumeSlider;
@@ -49,6 +50,12 @@ public class MenuController : MonoBehaviour
 
     private void Start()
     {
+        var playerName = GameData.Instance.PlayerName;
+        var playerNameValid = string.IsNullOrEmpty(playerName);
+        inputField.gameObject.SetActive(playerNameValid);
+        welcomeText.gameObject.SetActive(!playerNameValid);
+        welcomeText.text = $"Welcome back, {playerName}";
+
         bgmVolumeSlider.value = AudioController.Instance.VolumeBGM;
         bgmVolumeValueText.text = $"BGM: {RoundVolumeValue(bgmVolumeSlider.value)}";
 

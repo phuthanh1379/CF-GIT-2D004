@@ -8,7 +8,6 @@ public class Spaceship : MonoBehaviour
 {
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private Color hitColor;
-    [SerializeField] private int maxHealth;
     [SerializeField] private Animator animator;
     [SerializeField] private Image healthBarImage;
     [SerializeField] private GameObject explosionFx;
@@ -36,13 +35,14 @@ public class Spaceship : MonoBehaviour
     public int CurrentHealth { get; private set; }
     public int BulletCount { get; private set; }
     public int BulletMax => bulletMax;
-    public int HealthMax => maxHealth;
+    public int HealthMax { get; private set; }
 
     private void Awake()
     {
         BulletCount = bulletMax;
         _baseColor = spriteRenderer.color;
-        CurrentHealth = maxHealth;
+        HealthMax = GameData.Instance.PlayerProfile.PlayerHealthMax;
+        CurrentHealth = GameData.Instance.PlayerProfile.PlayerHealth;
     }
 
     private void Update()
@@ -83,6 +83,7 @@ public class Spaceship : MonoBehaviour
     private IEnumerator OnHit()
     {
         CurrentHealth--;
+        GameData.Instance.PlayerProfile.SetPlayerHealth(CurrentHealth);
         spriteRenderer.color = hitColor;
         yield return new WaitForSeconds(0.1f);
         spriteRenderer.color = _baseColor;
