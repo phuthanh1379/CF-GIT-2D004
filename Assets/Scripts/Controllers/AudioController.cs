@@ -19,6 +19,8 @@ public class AudioController : MonoBehaviour
     [SerializeField] private AudioClip inGameBGM;
 
     private const string InGameSceneName = "Main";
+    private const string BGMVolumeKey = "BGMVolume";
+    private const string SFXVolumeKey = "SFXVolume";
 
     public float VolumeBGM => bgmAudioSource.volume;
     public float VolumeSFX => sfxAudioSource.volume;
@@ -32,7 +34,7 @@ public class AudioController : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
-
+        LoadSettings();
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
@@ -46,6 +48,15 @@ public class AudioController : MonoBehaviour
         PlayBGM(menuBGM);
     }
 
+    private void LoadSettings()
+    {
+        var bgmVolume = PlayerPrefs.GetFloat(BGMVolumeKey, 1f);
+        SetVolume(bgmAudioSource, bgmVolume);
+
+        var sfxVolume = PlayerPrefs.GetFloat(SFXVolumeKey, 1f);
+        SetVolume(sfxAudioSource, sfxVolume);
+    }
+
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         if (string.Equals(scene.name, InGameSceneName))
@@ -54,8 +65,17 @@ public class AudioController : MonoBehaviour
         }
     }
 
-    public void SetVolumeBGM(float volume) => SetVolume(bgmAudioSource, volume);
-    public void SetVolumeSFX(float volume) => SetVolume(sfxAudioSource, volume);
+    public void SetVolumeBGM(float volume)
+    {
+        SetVolume(bgmAudioSource, volume);
+        PlayerPrefs.SetFloat(BGMVolumeKey, volume);
+    }
+
+    public void SetVolumeSFX(float volume)
+    {
+        SetVolume(sfxAudioSource, volume);
+        PlayerPrefs.SetFloat(SFXVolumeKey, volume);
+    }
 
     private void SetVolume(AudioSource audioSource, float value)
     {
