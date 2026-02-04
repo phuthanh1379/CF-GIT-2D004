@@ -9,14 +9,91 @@ namespace TopDown
         [SerializeField] private Animator animator;
         [SerializeField] private float speed;
 
+        [Header("Attack")]
+        [SerializeField] private float attackRadius;
+        [SerializeField] private LayerMask enemyLayerMask;
+        [SerializeField] private Transform downAttackPoint;
+        [SerializeField] private Transform leftAttackPoint;
+        [SerializeField] private Transform rightAttackPoint;
+        [SerializeField] private Transform upAttackPoint;
+
+        private const string AttackKey = "Attack";
+        private const string IsMovingKey = "IsMoving";
+        private const string XKey = "X";
+        private const string YKey = "Y";
+
+        private Vector2 _input = Vector2.zero;
+        private bool _isAttacking;
+
+        private void OnDrawGizmos()
+        {
+            Gizmos.DrawWireSphere(downAttackPoint.position, attackRadius);
+            Gizmos.DrawWireSphere(leftAttackPoint.position, attackRadius);
+            Gizmos.DrawWireSphere(rightAttackPoint.position, attackRadius);
+            Gizmos.DrawWireSphere(upAttackPoint.position, attackRadius);
+        }
+
         private void Update()
+        {
+            Move();
+            Attack();
+        }
+
+        private void Move()
         {
             var horizontal = Input.GetAxisRaw("Horizontal");
             var vertical = Input.GetAxisRaw("Vertical");
+            var isMoving = horizontal != 0 || vertical != 0;
+            if (isMoving)
+            {
+                _input = new Vector2(horizontal, vertical);
+            }
 
             transform.Translate(speed * Time.deltaTime * new Vector2(horizontal, vertical));
-            animator.SetFloat("X", horizontal);
-            animator.SetFloat("Y", vertical);
+            animator.SetFloat(XKey, _input.x);
+            animator.SetFloat(YKey, _input.y);
+            animator.SetBool(IsMovingKey, isMoving);
+        }
+
+        private void Attack()
+        {
+            // Left click
+            if (Input.GetMouseButtonDown(0) && !_isAttacking)
+            {
+                _isAttacking = true;
+                animator.SetTrigger(AttackKey);
+
+                if (_input.y >= 1f)
+                {
+                    CheckAttack(upAttackPoint);
+                }
+                else if (_input.y <= -1f)
+                {
+                    CheckAttack(downAttackPoint);
+                }
+                else if (_input.x >= 1f)
+                {
+                    CheckAttack(rightAttackPoint);
+                }
+                else if (_input.x <= -1f)
+                {
+                    CheckAttack(leftAttackPoint);
+                }
+            }
+        }
+
+        private void CheckAttack(Transform attackPoint)
+        {
+            var collider = Physics2D.OverlapCircle(attackPoint.position, attackRadius, enemyLayerMask);
+            if (collider != null && collider.GetComponent<Enemy>() != null)
+            {
+                collider.GetComponent<Enemy>().OnHit();
+            }
+        }
+
+        private void OnCompleteAttack()
+        {
+            _isAttacking = false;
         }
     }
 }
