@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5c0535d56612bd469124cee016301f9, type: 3}
+  m_Name: DialogueData
+  m_EditorClassIdentifier: 
+  sentenceList:
+  - <Character>k__BackingField: {fileID: 11400000, guid: 7fdf8ed378b6c6c408f1c939d58709ad, type: 2}
+    <Sentence>k__BackingField: Hello
+  - <Character>k__BackingField: {fileID: 11400000, guid: 701a1ddbdf1d229458ea5bea78e9da2c, type: 2}
+    <Sentence>k__BackingField: Hello how are you.
+  - <Character>k__BackingField: {fileID: 11400000, guid: 7fdf8ed378b6c6c408f1c939d58709ad, type: 2}
+    <Sentence>k__BackingField: I'm fine thank you. And you.
+  - <Character>k__BackingField: {fileID: 11400000, guid: 701a1ddbdf1d229458ea5bea78e9da2c, type: 2}
+    <Sentence>k__BackingField: I'm fine.

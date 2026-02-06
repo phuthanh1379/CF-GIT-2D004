@@ -9,6 +9,7 @@ namespace TopDown
     {
         [SerializeField] private Animator animator;
         [SerializeField] private float speed;
+        [SerializeField] private Sprite avatar;
 
         [Header("Attack")]
         [SerializeField] private float attackRadius;
@@ -27,7 +28,8 @@ namespace TopDown
         private bool _isAttacking;
         private bool _isMovable;
 
-        public event Action<string> TalkToNPC;
+        public Sprite Avatar => avatar;
+        public event Action<DialogueData> TalkToNPC;
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
@@ -71,7 +73,7 @@ namespace TopDown
             }
 
             _isMovable = false;
-            TalkToNPC?.Invoke(npc.DialogueContent);
+            TalkToNPC?.Invoke(npc.DialogueData);
         }
 
         private void Move()

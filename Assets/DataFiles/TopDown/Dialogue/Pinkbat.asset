@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17817ddfdfb4d2649a0bbd367fb547db, type: 3}
+  m_Name: Pinkbat
+  m_EditorClassIdentifier: 
+  <Name>k__BackingField: Pink Bat
+  <Avatar>k__BackingField: {fileID: 75403406, guid: ce4af45c311a26f4c8d77f20503df7e2, type: 3}

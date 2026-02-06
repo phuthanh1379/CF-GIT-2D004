@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 
 namespace TopDown
@@ -42,6 +39,7 @@ namespace TopDown
 
         private void Start()
         {
+            dialogue.Init(player.Avatar);
             dialogue.Hide();
             closeDialogueGameObject.SetActive(false);
         }
@@ -66,10 +64,10 @@ namespace TopDown
             }
         }
 
-        private void OnTalkToNPC(string dialogueContent)
+        private void OnTalkToNPC(DialogueData data)
         {
             _canCloseDialogue = false;
-            dialogue.Show(dialogueContent);
+            dialogue.Show(data);
         }
 
         private void OnCompleteShowDialogue()
