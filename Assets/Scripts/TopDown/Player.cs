@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 namespace TopDown
@@ -24,6 +25,26 @@ namespace TopDown
 
         private Vector2 _input = Vector2.zero;
         private bool _isAttacking;
+
+        public event Action<string> TalkToNPC;
+
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            if (collision == null)
+            {
+                return;
+            }
+
+            if (collision.CompareTag("NeutralNPC"))
+            {
+                if (!collision.TryGetComponent<NPC>(out var npc))
+                {
+                    return;
+                }
+
+                TalkToNPC?.Invoke(npc.DialogueContent);
+            }
+        }
 
         private void OnDrawGizmos()
         {
