@@ -25,6 +25,7 @@ namespace TopDown
 
         private Vector2 _input = Vector2.zero;
         private bool _isAttacking;
+        private bool _isMovable;
 
         public event Action<string> TalkToNPC;
 
@@ -37,12 +38,7 @@ namespace TopDown
 
             if (collision.CompareTag("NeutralNPC"))
             {
-                if (!collision.TryGetComponent<NPC>(out var npc))
-                {
-                    return;
-                }
-
-                TalkToNPC?.Invoke(npc.DialogueContent);
+                StartTalkToNPC(collision);
             }
         }
 
@@ -54,14 +50,37 @@ namespace TopDown
             Gizmos.DrawWireSphere(upAttackPoint.position, attackRadius);
         }
 
+        private void Awake()
+        {
+            _isMovable = true;
+        }
+
         private void Update()
         {
             Move();
             Attack();
         }
 
+        public void SetMovable(bool movable) => _isMovable = movable;
+
+        private void StartTalkToNPC(Collider2D collision)
+        {
+            if (!collision.TryGetComponent<NPC>(out var npc))
+            {
+                return;
+            }
+
+            _isMovable = false;
+            TalkToNPC?.Invoke(npc.DialogueContent);
+        }
+
         private void Move()
         {
+            if (!_isMovable)
+            {
+                return;
+            }
+
             var horizontal = Input.GetAxisRaw("Horizontal");
             var vertical = Input.GetAxisRaw("Vertical");
             var isMoving = horizontal != 0 || vertical != 0;
