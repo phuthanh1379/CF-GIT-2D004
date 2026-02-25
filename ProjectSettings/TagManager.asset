@@ -49,3 +49,6 @@ TagManager:
   - name: Character
     uniqueID: 997041179
     locked: 0
+  - name: Foreground
+    uniqueID: 2110781397
+    locked: 0

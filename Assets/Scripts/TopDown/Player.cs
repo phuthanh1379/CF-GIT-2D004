@@ -126,11 +126,11 @@ namespace TopDown
 
         private void CheckAttack(Transform attackPoint)
         {
-            var collider = Physics2D.OverlapCircle(attackPoint.position, attackRadius, enemyLayerMask);
-            if (collider != null && collider.GetComponent<Enemy>() != null)
-            {
-                collider.GetComponent<Enemy>().OnHit();
-            }
+            //var collider = Physics2D.OverlapCircle(attackPoint.position, attackRadius, enemyLayerMask);
+            //if (collider != null && collider.GetComponent<Enemy>() != null)
+            //{
+            //    collider.GetComponent<Enemy>().OnHit();
+            //}
         }
 
         private void OnCompleteAttack()

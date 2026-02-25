@@ -1,56 +1,40 @@
-using DG.Tweening;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace TopDown
 {
     public class Enemy : MonoBehaviour
     {
-        [SerializeField] private SpriteRenderer spriteRenderer;
-        [SerializeField] private Vector3 startPosition;
-        [SerializeField] private Vector3 endPosition;
-        [SerializeField] private Color startColor;
-        [SerializeField] private Color endColor;
+        [SerializeField] private Rigidbody2D rb;
+        [SerializeField] private float speed;
 
-        private Sequence _colorSequence;
+        private Transform _player;
+        private bool _isChasing;
 
-        private void Start()
+        private void Update()
         {
-            var moveToEnd = transform.DOMove(endPosition, 2f);
-            var moveToStart = transform.DOMove(startPosition, 2f);
-            var endColorTween = spriteRenderer.DOColor(endColor, 0.5f);
-            var startColorTween = spriteRenderer.DOColor(startColor, 0.5f);
-
-            //Sequence sequence = DOTween.Sequence();
-            //sequence
-            //    .Append(moveToEnd)
-            //    .Join(endColorTween)
-            //    .Append(moveToStart)
-            //    .Join(startColorTween)
-            //    .Play()
-            //    .SetLoops(-1);
-
-            _colorSequence = DOTween.Sequence();
-            _colorSequence
-                .Append(endColorTween)
-                .Append(startColorTween)
-                .SetAutoKill(false)
-                .Pause()
-                ;
+            if (_isChasing)
+            {
+                Vector2 direction = (_player.position - transform.position).normalized;
+                rb.velocity = speed * direction;
+            }
         }
 
-        public void OnHit()
+        private void OnTriggerEnter2D(Collider2D collision)
         {
-            //StartCoroutine(OnHit(0.5f));
-            _colorSequence.Restart();
+            if (collision != null && collision.CompareTag("Player")) 
+            {
+                _player = collision.transform;
+                _isChasing = true;
+            }
         }
 
-        private IEnumerator OnHit(float time)
+        private void OnTriggerExit2D(Collider2D collision)
         {
-            spriteRenderer.color = Color.red;
-            yield return new WaitForSeconds(time);
-            spriteRenderer.color = Color.white;
+            if (collision != null && collision.CompareTag("Player"))
+            {
+                rb.velocity = Vector2.zero;
+                _isChasing = false;
+            }
         }
     }
 }

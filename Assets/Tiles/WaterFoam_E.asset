@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13b75c95f34a00d4e8c04f76b73312e6, type: 3}
+  m_Name: WaterFoam_E
+  m_EditorClassIdentifier: 
+  m_AnimatedSprites:
+  - {fileID: -1776555202, guid: 26211943791decf459868a8f7e664fde, type: 3}
+  - {fileID: 867969435, guid: 26211943791decf459868a8f7e664fde, type: 3}
+  - {fileID: -1125308164, guid: 26211943791decf459868a8f7e664fde, type: 3}
+  - {fileID: 8994109, guid: 26211943791decf459868a8f7e664fde, type: 3}
+  - {fileID: -1748554261, guid: 26211943791decf459868a8f7e664fde, type: 3}
+  - {fileID: 946519720, guid: 26211943791decf459868a8f7e664fde, type: 3}
+  - {fileID: -1478612013, guid: 26211943791decf459868a8f7e664fde, type: 3}
+  - {fileID: 86829707, guid: 26211943791decf459868a8f7e664fde, type: 3}
+  m_MinSpeed: 5
+  m_MaxSpeed: 8
+  m_AnimationStartTime: 0
+  m_AnimationStartFrame: 0
+  m_TileColliderType: 0
+  m_TileAnimationFlags: 0
