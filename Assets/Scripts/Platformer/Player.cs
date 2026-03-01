@@ -21,6 +21,11 @@ namespace Platformer
         private bool isWallSliding;
         private Vector3 _baseScale;
 
+        private static readonly int XKey = Animator.StringToHash("X");
+        private static readonly int IsJumpKey = Animator.StringToHash("IsJump");
+        private const string GroundTag = "Ground";
+        private const string WallTag = "Wall";
+
         private bool IsGrounded()
         {
             return Physics2D.OverlapCircle(groundCheck.position, radius, groundLayer);
@@ -64,7 +69,7 @@ namespace Platformer
         private void Move()
         {
             var horizontal = Input.GetAxisRaw("Horizontal");
-            animator.SetInteger("X", (int)horizontal);
+            animator.SetInteger(XKey, (int)horizontal);
             rb.velocity = new Vector2(speed * horizontal, rb.velocity.y);
             Flip(horizontal);
         }
@@ -117,6 +122,7 @@ namespace Platformer
                 DoJump();
             }
 
+            return;
             void DoJump()
             {
                 rb.velocity = new Vector2(rb.velocity.x, jumpForce);
@@ -136,16 +142,16 @@ namespace Platformer
                 return; 
             }
 
-            if (collision.gameObject.CompareTag("Ground"))
+            if (collision.gameObject.CompareTag(GroundTag))
             {
                 isGrounded = true;
                 isWallSliding = false;
                 isDoubleJump = false;
-                animator.SetBool("IsJump", false);
+                animator.SetBool(IsJumpKey, false);
                 return;
             }
             
-            if (collision.gameObject.CompareTag("Wall"))
+            if (collision.gameObject.CompareTag(WallTag))
             {
                 isWallSliding = true;
             }
@@ -158,12 +164,12 @@ namespace Platformer
                 return;
             }
 
-            if (collision.gameObject.CompareTag("Ground"))
+            if (collision.gameObject.CompareTag(GroundTag))
             {
                 isGrounded = false;
-                animator.SetBool("IsJump", true);
+                animator.SetBool(IsJumpKey, true);
             }
-            else if (collision.gameObject.CompareTag("Wall"))
+            else if (collision.gameObject.CompareTag(WallTag))
             {
                 isWallSliding = false;
             }
