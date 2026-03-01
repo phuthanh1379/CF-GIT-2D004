@@ -53,7 +53,7 @@ namespace Platformer
 
             if (isMovingDown)
             {
-                if (IsGrounded())
+                if (!IsGrounded())
                 {
                     col.enabled = true;
                     isMovingDown = false;
@@ -81,7 +81,7 @@ namespace Platformer
 
         private void MoveDown()
         {
-            if (!IsGrounded())
+            if (!isGrounded)
             {
                 return;
             }
@@ -104,7 +104,7 @@ namespace Platformer
 
         private void Jump()
         {
-            if (!IsGrounded())
+            if (!isGrounded)
             {
                 if (!isDoubleJump)
                 {
@@ -138,6 +138,7 @@ namespace Platformer
 
             if (collision.gameObject.CompareTag("Ground"))
             {
+                isGrounded = true;
                 isWallSliding = false;
                 isDoubleJump = false;
                 animator.SetBool("IsJump", false);
@@ -159,7 +160,7 @@ namespace Platformer
 
             if (collision.gameObject.CompareTag("Ground"))
             {
-                //isGrounded = false;
+                isGrounded = false;
                 animator.SetBool("IsJump", true);
             }
             else if (collision.gameObject.CompareTag("Wall"))
