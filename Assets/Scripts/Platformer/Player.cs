@@ -8,17 +8,24 @@ namespace Platformer
         [SerializeField] private Animator animator;
         [SerializeField] private Rigidbody2D rb;
         [SerializeField] private Collider2D col;
+
+        [Header("Values")]
         [SerializeField] private float speed;
         [SerializeField] private float slideSpeed;
         [SerializeField] private float jumpForce;
+        [SerializeField] private float stompForce;
+
+        [Header("Ground Check")]
         [SerializeField] private Transform groundCheck;
         [SerializeField] private float radius;
         [SerializeField] private LayerMask groundLayer;
 
-        private bool isGrounded;
-        private bool isDoubleJump;
-        private bool isMovingDown;
-        private bool isWallSliding;
+        [Header("Test")]
+        [SerializeField] private bool isGrounded;
+        [SerializeField] private bool canDoubleJump;
+        [SerializeField] private bool isMovingDown;
+        [SerializeField] private bool isWallSliding;
+        [SerializeField] private bool isStomping;
         private Vector3 _baseScale;
 
         private static readonly int XKey = Animator.StringToHash("X");
@@ -111,15 +118,18 @@ namespace Platformer
         {
             if (!isGrounded)
             {
-                if (!isDoubleJump)
+                if (canDoubleJump)
                 {
                     DoJump();
-                    isDoubleJump = true;
+                    canDoubleJump = false;
                 }
             }
             else
             {
-                DoJump();
+                if (isGrounded)
+                {
+                    DoJump();
+                }
             }
 
             return;
@@ -146,7 +156,7 @@ namespace Platformer
             {
                 isGrounded = true;
                 isWallSliding = false;
-                isDoubleJump = false;
+                canDoubleJump = true;
                 animator.SetBool(IsJumpKey, false);
                 return;
             }
