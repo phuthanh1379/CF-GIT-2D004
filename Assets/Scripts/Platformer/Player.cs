@@ -30,6 +30,7 @@ namespace Platformer
 
         private static readonly int XKey = Animator.StringToHash("X");
         private static readonly int IsJumpKey = Animator.StringToHash("IsJump");
+        private const float ColliderDisableDelay = 0.75f;
         private const string GroundTag = "Ground";
         private const string WallTag = "Wall";
 
@@ -99,7 +100,7 @@ namespace Platformer
             }
 
             col.enabled = false;
-            StartCoroutine(WaitForSeconds(0.5f));
+            StartCoroutine(WaitForSeconds(ColliderDisableDelay));
         }
 
         private void Flip(float horizontal)
