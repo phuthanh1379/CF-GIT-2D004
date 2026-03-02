@@ -9,6 +9,7 @@ namespace Platformer
         [SerializeField] private Rigidbody2D rb;
         [SerializeField] private Collider2D col;
         [SerializeField] private ParticleSystem bloodVFX;
+        [SerializeField] private ParticleSystem dustVFX;
 
         [Header("Values")]
         [SerializeField] private float speed;
@@ -87,6 +88,17 @@ namespace Platformer
         {
             var horizontal = Input.GetAxisRaw("Horizontal");
             animator.SetInteger(XKey, (int)horizontal);
+            if (horizontal != 0)
+            {
+                dustVFX.gameObject.SetActive(true);
+                dustVFX.Play();
+            }
+            else
+            {
+                dustVFX.Pause();
+                dustVFX.gameObject.SetActive(false);
+            }
+
             rb.velocity = new Vector2(speed * horizontal, rb.velocity.y);
             Flip(horizontal);
         }
