@@ -8,6 +8,7 @@ namespace Platformer
         [SerializeField] private Animator animator;
         [SerializeField] private Rigidbody2D rb;
         [SerializeField] private Collider2D col;
+        [SerializeField] private ParticleSystem bloodVFX;
 
         [Header("Values")]
         [SerializeField] private float speed;
@@ -72,6 +73,14 @@ namespace Platformer
                     isMovingDown = false;
                 }
             }
+        }
+
+        public void OnHurt(float x)
+        {
+            Debug.Log($"x={x}, ogX={transform.position.x}");
+            var blood = Instantiate(bloodVFX, transform.position, Quaternion.identity);
+            var bloodX = x > transform.position.x ? -1f : 1f;
+            blood.transform.localScale = new Vector3(bloodX, 1f, 1f);
         }
 
         private void Move()
