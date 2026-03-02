@@ -88,17 +88,6 @@ namespace Platformer
         {
             var horizontal = Input.GetAxisRaw("Horizontal");
             animator.SetInteger(XKey, (int)horizontal);
-            if (horizontal != 0)
-            {
-                dustVFX.gameObject.SetActive(true);
-                dustVFX.Play();
-            }
-            else
-            {
-                dustVFX.Pause();
-                dustVFX.gameObject.SetActive(false);
-            }
-
             rb.velocity = new Vector2(speed * horizontal, rb.velocity.y);
             Flip(horizontal);
         }
@@ -129,10 +118,12 @@ namespace Platformer
             if (horizontal < 0)
             {
                 transform.localScale = new Vector3(-_baseScale.x, _baseScale.y, _baseScale.z);
+                dustVFX.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
             }
             else if (horizontal > 0)
             {
                 transform.localScale = _baseScale;
+                dustVFX.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
             }
         }
 
