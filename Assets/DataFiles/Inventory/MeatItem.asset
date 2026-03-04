@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Name>k__BackingField: Meat
   <Sprite>k__BackingField: {fileID: 21300000, guid: cc693bdb711625c43b303a5cba730599, type: 3}
+  <Stackable>k__BackingField: 1

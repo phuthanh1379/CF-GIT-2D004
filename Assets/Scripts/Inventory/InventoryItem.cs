@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -7,9 +8,12 @@ using UnityEngine.UI;
 public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     [SerializeField] private Image image;
+    [SerializeField] private GameObject counterGameObject;
+    [SerializeField] private TMP_Text counterText;
 
     public Transform ParentAfterDrag { get; set; }
-    private InventoryItemData inventoryItemData;
+    public int Counter { get; set; }
+    public InventoryItemData Data { get; set; }
 
     public void Init(InventoryItemData data)
     {
@@ -19,7 +23,16 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         }
 
         image.sprite = data.Sprite;
-        inventoryItemData = data;
+        Data = data;
+        Counter = 1;
+        UpdateCounter();
+    }
+
+    public void UpdateCounter()
+    {
+        counterText.text = $"{Counter}";
+        bool isCounterVisible = Counter > 1;
+        counterGameObject.SetActive(isCounterVisible);
     }
 
     public void OnBeginDrag(PointerEventData eventData)
