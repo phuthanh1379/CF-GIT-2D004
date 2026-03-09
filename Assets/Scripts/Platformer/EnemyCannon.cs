@@ -4,8 +4,14 @@ public class EnemyCannon : MonoBehaviour
 {
     [SerializeField] private EnemyBullet bullet;
     [SerializeField] private float delay;
+    [SerializeField] private ObjectPooling bulletPool;
 
     private float timer = 0;
+
+    private void Start()
+    {
+        bulletPool.SetPrefab(bullet.gameObject);
+    }
 
     private void Update()
     {
@@ -20,6 +26,7 @@ public class EnemyCannon : MonoBehaviour
 
     private void Shoot()
     {
-        Instantiate(bullet, transform.position, Quaternion.identity);
+        var spawnedBullet = bulletPool.Get();
+        spawnedBullet.transform.position = transform.position;
     }
 }

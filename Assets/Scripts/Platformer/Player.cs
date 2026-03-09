@@ -10,6 +10,8 @@ namespace Platformer
         [SerializeField] private Collider2D col;
         [SerializeField] private ParticleSystem bloodVFX;
         [SerializeField] private ParticleSystem dustVFX;
+        [SerializeField] private DamageText damageTextPrefab;
+        [SerializeField] private Transform damageTextParent;
 
         [Header("Values")]
         [SerializeField] private float speed;
@@ -79,6 +81,13 @@ namespace Platformer
         public void OnHurt(float x)
         {
             Debug.Log($"x={x}, ogX={transform.position.x}");
+            // Spawn Damage text
+            var damageText = Instantiate(damageTextPrefab, transform.position, Quaternion.identity);
+            damageText.transform.SetParent(damageTextParent);
+            var damage = new System.Random().Next(1, 1000);
+            damageText.SetData($"{damage}", Color.red);
+
+            // Display blood effect
             var blood = Instantiate(bloodVFX, transform.position, Quaternion.identity);
             var bloodX = x > transform.position.x ? -1f : 1f;
             blood.transform.localScale = new Vector3(bloodX, 1f, 1f);
@@ -119,11 +128,13 @@ namespace Platformer
             {
                 transform.localScale = new Vector3(-_baseScale.x, _baseScale.y, _baseScale.z);
                 dustVFX.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
+                damageTextParent.localScale = new Vector3(-1f, 1f, 1f);
             }
             else if (horizontal > 0)
             {
                 transform.localScale = _baseScale;
                 dustVFX.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+                damageTextParent.localScale = Vector3.one;
             }
         }
 
