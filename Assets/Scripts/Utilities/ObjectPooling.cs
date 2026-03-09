@@ -20,8 +20,10 @@ public class ObjectPooling : MonoBehaviour
             return obj;
         }
 
-        objectPool[0].SetActive(true);
-        return objectPool[0];
+        var result = objectPool[0];
+        result.SetActive(true);
+        objectPool.RemoveAt(0);
+        return result;
     }
 
     public void AddToPool(GameObject obj)
